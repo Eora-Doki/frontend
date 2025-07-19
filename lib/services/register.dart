@@ -1,4 +1,6 @@
+import 'package:doki/screens/api_service.dart';
 import 'package:flutter/material.dart';
+import 'nickname.dart';
 
 class Register extends StatelessWidget {
   const Register({super.key});
@@ -20,6 +22,19 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  String selectedCharacter = 'dogi';
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    nameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +54,9 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
 
             Container(
-              padding: EdgeInsets.all(24),
+              padding: EdgeInsets.all(20),
               width: 280,
-              height: 280,
+              height: 240,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
@@ -94,7 +109,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
+
+                  const SizedBox(height: 40),
+
                   SizedBox(
+                    width: 280,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -111,8 +130,23 @@ class _RegisterPageState extends State<RegisterPage> {
                             pageBuilder: (context, animation, secondaryAnimation) => const Nickname(),
                           ),
                         );
+                        ApiService.registerUser(
+                          email: emailController.text,
+                          name: nameController.text,
+                          password: passwordController.text,
+                          character: selectedCharacter,
+                        );
                       },
-                      child: Padding(padding: padding),
+                      child: const Padding(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Text(
+                          '다음',
+                          style: TextStyle(
+                            fontFamily: 'BlackHanSans-Regular',
+                            fontSize: 23,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -124,3 +158,4 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+

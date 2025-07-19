@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:doki/login.dart';
-import 'package:doki/register.dart';
+import 'package:doki/services/login.dart';
+import 'package:doki/services/register.dart';
 
 void main() {
   runApp(const Start());
