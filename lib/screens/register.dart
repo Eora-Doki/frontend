@@ -1,4 +1,4 @@
-import 'package:doki/screens/api_service.dart';
+import 'package:doki/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'nickname.dart';
 
@@ -75,9 +75,10 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               child: Column(
                 children: [
-                  const TextField(
-                    cursorColor: Color(0x80000000),
-                    decoration: InputDecoration(
+                  TextField(
+                    controller: emailController,
+                    cursorColor: const Color(0x80000000),
+                    decoration: const InputDecoration(
                       labelText: '이메일',
                       labelStyle: TextStyle(
                         fontFamily: 'BlackHanSans-Regular',
@@ -92,10 +93,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const TextField(
+                  TextField(
+                    controller: passwordController,
                     obscureText: true,
-                    cursorColor: Color(0x80000000),
-                    decoration: InputDecoration(
+                    cursorColor: const Color(0x80000000),
+                    decoration: const InputDecoration(
                       labelText: '비밀번호',
                       labelStyle: TextStyle(
                         fontFamily: 'BlackHanSans-Regular',
@@ -123,19 +125,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) => const Nickname(),
-                          ),
-                        );
-                        ApiService.registerUser(
+                      onPressed: () async {
+                        final success = await ApiService.registerUser(
                           email: emailController.text,
                           name: nameController.text,
                           password: passwordController.text,
                           character: selectedCharacter,
                         );
+
+                        if (success) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const Nickname()),
+                          );
+                        }
                       },
                       child: const Padding(
                         padding: EdgeInsets.only(top: 5),
