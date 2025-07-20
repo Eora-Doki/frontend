@@ -46,7 +46,7 @@ class _StartPageState extends State<StartPage> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(bottom: 100),
+              padding: const EdgeInsets.only(bottom: 30),
               child: Column(
                 children: [
                   SizedBox(
@@ -67,7 +67,7 @@ class _StartPageState extends State<StartPage> {
                         );
                       },
                       child: const Padding(
-                        padding: EdgeInsets.only(top: 5),
+                        padding: EdgeInsets.only(top: 3),
                         child: Text(
                           '로그인',
                           style: TextStyle(
@@ -99,7 +99,7 @@ class _StartPageState extends State<StartPage> {
                         );
                       },
                       child: const Padding(
-                        padding: EdgeInsets.only(top: 5),
+                        padding: EdgeInsets.only(top: 3),
                         child: Text(
                           '회원가입',
                           style: TextStyle(

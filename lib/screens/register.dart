@@ -1,4 +1,3 @@
-import 'package:doki/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'nickname.dart';
 
@@ -23,14 +22,11 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  String selectedCharacter = 'dogi';
 
   @override
   void dispose() {
     emailController.dispose();
-    nameController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -54,9 +50,9 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
 
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               width: 280,
-              height: 240,
+              height: 280,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
@@ -112,7 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 30),
 
                   SizedBox(
                     width: 280,
@@ -125,23 +121,19 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () async {
-                        final success = await ApiService.registerUser(
-                          email: emailController.text,
-                          name: nameController.text,
-                          password: passwordController.text,
-                          character: selectedCharacter,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NicknamePage(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            ),
+                          ),
                         );
-
-                        if (success) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const Nickname()),
-                          );
-                        }
                       },
                       child: const Padding(
-                        padding: EdgeInsets.only(top: 5),
+                        padding: EdgeInsets.only(top: 2),
                         child: Text(
                           '다음',
                           style: TextStyle(
