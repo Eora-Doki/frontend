@@ -20,9 +20,18 @@ class CharacterPage extends StatefulWidget {
 
 class _CharacterPageState extends State<CharacterPage> {
   String selectedCharacter = '';
+  String selectedAnimation = '스파이패밀리';
+
+  final Map<String, List<String>> characterMap = {
+    '스파이패밀리': ['아냐', '본드', '로이드'],
+    '진격의거인': ['리바이', '옐렌예거', '한지'],
+    '장송의프리렌': ['프리렌', '페른', '슈타르크'],
+  };
 
   @override
   Widget build(BuildContext context) {
+    final List<String> characters = characterMap[selectedAnimation] ?? [];
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -82,7 +91,7 @@ class _CharacterPageState extends State<CharacterPage> {
             ),
             
             Padding(
-              padding: const EdgeInsets.all(40),
+              padding: const EdgeInsets.all(30),
               child: Image.asset(
                 'assets/images/sf_anya.png',
                 width: 200,
@@ -90,61 +99,86 @@ class _CharacterPageState extends State<CharacterPage> {
               ),
             ),
 
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xffB2ECB7),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildAnimation('스파이패밀리', true),
-                      _buildAnimation('진격의거인', true),
-                      _buildAnimation('스파이패밀리', true),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(
-              width: 80,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  backgroundColor: const Color(0xff69BF70),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Color(0xffB2ECB7),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
                   ),
                 ),
-                onPressed: () async {
-                  final success = await ApiService.registerUser(
-                    email: widget.email,
-                    name: widget.name,
-                    password: widget.password,
-                    character: selectedCharacter,
-                  );
-                  if (success) {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Doki()),
-                          (route) => false,
-                    );
-                  }
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 2),
-                  child: Text(
-                    '완료',
-                    style: TextStyle(
-                      fontFamily: 'BlackHanSans-Regular',
-                      fontSize: 23,
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildAnimation('스파이패밀리'),
+                        _buildAnimation('진격의거인'),
+                        _buildAnimation('장송의프리렌'),
+                      ],
                     ),
-                  ),
+
+                    const SizedBox(height: 20),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildCharacter('아냐', 'assets/images/sf_anya.png'),
+                        _buildCharacter('본드', 'assets/images/sf_anya.png'),
+                        _buildCharacter('은비', 'assets/images/sf_anya.png'),
+                      ],
+                    ),
+
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 13, right: 7),
+                        child: SizedBox(
+                          width: 130,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              backgroundColor: const Color(0xff69BF70),
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            onPressed: () async {
+                              final success = await ApiService.registerUser(
+                                email: widget.email,
+                                name: widget.name,
+                                password: widget.password,
+                                character: selectedCharacter,
+                              );
+                              if (success) {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const Doki()),
+                                      (route) => false,
+                                );
+                              }
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.only(top: 0),
+                              child: Text(
+                                '완료',
+                                style: TextStyle(
+                                  fontFamily: 'BlackHanSans-Regular',
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -153,40 +187,50 @@ class _CharacterPageState extends State<CharacterPage> {
       ),
     );
   }
-}
 
-// 애니메이션 탭
-Widget _buildAnimation(String text, bool selected) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    decoration: BoxDecoration(
-      color: selected ? const Color(0xff69BF70) : const Color(0x8069BF70),
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: Text(
-      text,
-      style: TextStyle(
-        fontFamily: 'BlackHanSans-Regular',
-        color: selected ? Colors.white : const Color(0x80FFFFFF),
-      ),
-    ),
-  );
-}
+  // 애니메이션 탭 생성 함수
+  Widget _buildAnimation(String animationName) {
+    final bool isSelected = selectedAnimation == animationName;
 
-// 캐릭터 탭
-Widget _buildCharacter(String name, String imagePath) {
-  return Column(
-    children: [
-      Image.asset(imagePath, width: 60, height: 60),
-      const SizedBox(height: 8),
-      Text(
-        name,
-        style: const TextStyle(
-          fontFamily: 'BlackHanSans-Regular',
-          fontSize: 16,
-          color: Colors.black,
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedAnimation = animationName;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xff69BF70) : const Color(0x8069BF70),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Text(
+          animationName,
+          style: TextStyle(
+            fontFamily: 'BlackHanSans-Regular',
+            color: isSelected ? Colors.white : const Color(0x80FFFFFF),
+          ),
         ),
       ),
-    ],
-  );
+    );
+  }
+
+  // 캐릭터 탭 생성 함수
+  Widget _buildCharacter(String name, String imagePath) {
+    return Column(
+      children: [
+        Image.asset(imagePath, width: 80, height: 80),
+        const SizedBox(height: 8),
+        Text(
+          name,
+          style: const TextStyle(
+            fontFamily: 'BlackHanSans-Regular',
+            fontSize: 16,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
 }
+
