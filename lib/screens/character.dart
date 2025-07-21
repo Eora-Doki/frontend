@@ -22,16 +22,26 @@ class _CharacterPageState extends State<CharacterPage> {
   String selectedCharacter = '';
   String selectedAnimation = '스파이패밀리';
 
-  final Map<String, List<String>> characterMap = {
-    '스파이패밀리': ['아냐', '본드', '로이드'],
-    '진격의거인': ['리바이', '옐렌예거', '한지'],
-    '장송의프리렌': ['프리렌', '페른', '슈타르크'],
+  final Map<String, List<Map<String, String>>> characterMap = {
+    '스파이패밀리': [
+      {'name': '아냐', 'image': 'assets/images/sf_anya.png'},
+      {'name': '본드', 'image': 'assets/images/sf_anya.png'},
+      {'name': '로이드', 'image': 'assets/images/sf_anya.png'},
+    ],
+    '진격의거인': [
+      {'name': '리바이', 'image': 'assets/images/sf_anya.png'},
+      {'name': '옐렌예거', 'image': 'assets/images/sf_anya.png'},
+      {'name': '한지', 'image': 'assets/images/sf_anya.png'},
+    ],
+    '장송의프리렌': [
+      {'name': '프리렌', 'image': 'assets/images/sf_anya.png'},
+      {'name': '페른', 'image': 'assets/images/sf_anya.png'},
+      {'name': '슈타르크', 'image': 'assets/images/sf_anya.png'},
+    ],
   };
 
   @override
   Widget build(BuildContext context) {
-    final List<String> characters = characterMap[selectedAnimation] ?? [];
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -39,12 +49,15 @@ class _CharacterPageState extends State<CharacterPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              'Doki',
-              style: TextStyle(
-                fontSize: 110,
-                fontFamily: 'Jersey15-Regular',
-                color: Color(0xff69BF70),
+            Transform.translate(
+              offset: const Offset(0, 20),
+              child: const Text(
+                'Doki',
+                style: TextStyle(
+                  fontSize: 110,
+                  fontFamily: 'Jersey15-Regular',
+                  color: Color(0xff69BF70),
+                ),
               ),
             ),
 
@@ -94,8 +107,8 @@ class _CharacterPageState extends State<CharacterPage> {
               padding: const EdgeInsets.all(30),
               child: Image.asset(
                 'assets/images/sf_anya.png',
-                width: 200,
-                height: 200,
+                width: 180,
+                height: 180,
               ),
             ),
 
@@ -127,11 +140,9 @@ class _CharacterPageState extends State<CharacterPage> {
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildCharacter('아냐', 'assets/images/sf_anya.png'),
-                        _buildCharacter('본드', 'assets/images/sf_anya.png'),
-                        _buildCharacter('은비', 'assets/images/sf_anya.png'),
-                      ],
+                      children: characterMap[selectedAnimation]!.map((character) {
+                        return _buildCharacter(character['name']!, character['image']!);
+                      }).toList(),
                     ),
 
                     Align(
@@ -160,7 +171,7 @@ class _CharacterPageState extends State<CharacterPage> {
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(builder: (context) => const Doki()),
-                                      (route) => false,
+                                    (route) => false,
                                 );
                               }
                             },
@@ -196,6 +207,12 @@ class _CharacterPageState extends State<CharacterPage> {
       onTap: () {
         setState(() {
           selectedAnimation = animationName;
+          final characters = characterMap[animationName];
+          if (characters != null && characters.isNotEmpty) {
+            selectedCharacter = characters[0]['name']!;
+          } else {
+            selectedCharacter = '';
+          }
         });
       },
       child: Container(
@@ -217,19 +234,38 @@ class _CharacterPageState extends State<CharacterPage> {
 
   // 캐릭터 탭 생성 함수
   Widget _buildCharacter(String name, String imagePath) {
-    return Column(
-      children: [
-        Image.asset(imagePath, width: 80, height: 80),
-        const SizedBox(height: 8),
-        Text(
-          name,
-          style: const TextStyle(
-            fontFamily: 'BlackHanSans-Regular',
-            fontSize: 16,
-            color: Colors.white,
-          ),
+    final bool isSelected = selectedCharacter == name;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedCharacter = name;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+          border: isSelected
+              ? Border.all(color: Colors.white, width: 3)
+              : null,
         ),
-      ],
+        child: Column(
+          children: [
+            Image.asset(imagePath, width: 80, height: 80),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: const TextStyle(
+                fontFamily: 'BlackHanSans-Regular',
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
