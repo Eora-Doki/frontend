@@ -1,3 +1,4 @@
+import 'package:doki/screens/start.dart';
 import 'package:flutter/material.dart';
 import 'package:doki/services/api_service.dart';
 import 'main.dart';
@@ -170,7 +171,7 @@ class _CharacterPageState extends State<CharacterPage> {
                               if (success) {
                                 Navigator.pushAndRemoveUntil(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const Doki()),
+                                  MaterialPageRoute(builder: (context) => const StartPage()),
                                     (route) => false,
                                 );
                               }
