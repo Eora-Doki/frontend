@@ -35,4 +35,34 @@ class ApiService {
       return false;
     }
   }
+
+  static Future<String?> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://172.30.1.77:8083/user/login'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print('로그인 성공: ${data['token']}');
+        return data['token'];
+      } else {
+        print('로그인 실패: ${response.statusCode} ${response.body}');
+        return null;
+      }
+    } catch (e) {
+      print("로그인 오류: $e");
+      return null;
+    }
+  }
 }

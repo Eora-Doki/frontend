@@ -52,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Container(
               padding: const EdgeInsets.all(20),
               width: 280,
-              height: 280,
+              height: 260,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
@@ -88,7 +88,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 16),
+
                   TextField(
                     controller: passwordController,
                     obscureText: true,
@@ -114,7 +116,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: 280,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         backgroundColor: const Color(0xff69BF70),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -135,7 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: const Padding(
                         padding: EdgeInsets.only(top: 2),
                         child: Text(
-                          '다음',
+                          '회원가입',
                           style: TextStyle(
                             fontFamily: 'BlackHanSans-Regular',
                             fontSize: 23,

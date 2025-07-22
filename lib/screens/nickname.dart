@@ -45,7 +45,7 @@ class _NicknamePageState extends State<NicknamePage> {
             Container(
               padding: const EdgeInsets.all(20),
               width: 280,
-              height: 200,
+              height: 180,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
@@ -83,13 +83,13 @@ class _NicknamePageState extends State<NicknamePage> {
                     ),
                   ),
 
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 25),
 
                   SizedBox(
                     width: 280,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         backgroundColor: const Color(0xff69BF70),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(

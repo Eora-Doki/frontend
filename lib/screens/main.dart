@@ -1,7 +1,10 @@
+import 'package:doki/screens/start.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const Doki());
+  runApp(const MaterialApp(
+    home: HomePage(email: 'test@email.com', password: '1234'),
+  ));
 }
 
 class Doki extends StatelessWidget {
@@ -11,13 +14,21 @@ class Doki extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Doki',
-      home: HomePage(),
+      debugShowCheckedModeBanner: false,
+      home: StartPage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String email;
+  final String password;
+
+  const HomePage({
+    super.key,
+    required this.email,
+    required this.password,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();

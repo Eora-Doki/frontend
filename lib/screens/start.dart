@@ -46,14 +46,14 @@ class _StartPageState extends State<StartPage> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(bottom: 30),
+              padding: const EdgeInsets.only(bottom: 10),
               child: Column(
                 children: [
                   SizedBox(
                     width: 280,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         backgroundColor: const Color(0xff69BF70),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -63,7 +63,7 @@ class _StartPageState extends State<StartPage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const Login()),
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
                         );
                       },
                       child: const Padding(
@@ -85,7 +85,7 @@ class _StartPageState extends State<StartPage> {
                     width: 280,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         backgroundColor: const Color(0xff69BF70),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(

@@ -246,7 +246,7 @@ class _CharacterPageState extends State<CharacterPage> {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: isSelected
               ? Border.all(color: Colors.white, width: 3)
               : null,
