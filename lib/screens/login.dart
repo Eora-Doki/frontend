@@ -1,7 +1,9 @@
+import 'package:doki/screens/password.dart';
 import 'package:doki/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:doki/services/api_service.dart';
 import 'main.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  static const FlutterSecureStorage secureStorage = FlutterSecureStorage();
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -22,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (token != null) {
       print("로그인 성공! 토큰: $token");
+      await secureStorage.write(key: 'access_token', value: token);
       return true;
     } else {
       print("로그인 실패");
@@ -121,7 +126,12 @@ class _LoginPageState extends State<LoginPage> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PasswordPage())
+                          );
+                        },
                         child: const Text(
                           '비밀번호 찾기',
                           style: TextStyle(

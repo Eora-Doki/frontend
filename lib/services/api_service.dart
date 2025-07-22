@@ -65,4 +65,29 @@ class ApiService {
       return null;
     }
   }
+
+  static Future<bool> resetPassword(String email, String newPassword) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://172.30.1.77:8083/api/reset-password'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email,
+          'newPassword': newPassword,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('비밀번호 변경 성공');
+        return true;
+      } else {
+        print('비밀번호 변경 실패: ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      print('비밀번호 변경 오류: $e');
+      return false;
+    }
+  }
+
 }
