@@ -22,7 +22,7 @@ class ApiService {
         }),
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
         print('회원가입 성공: ${data['message']}');
         return true;
