@@ -54,8 +54,12 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print('로그인 성공: ${data['token']}');
-        return data['token'];
+        final token = data['Authorization'];
+
+        if (token != null && token.isNotEmpty) {
+          print('로그인 성공: $token');
+          return token;
+        }
       } else {
         print('로그인 실패: ${response.statusCode} ${response.body}');
         return null;
@@ -77,7 +81,7 @@ class ApiService {
         }),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         print('비밀번호 변경 성공');
         return true;
       } else {
