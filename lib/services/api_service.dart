@@ -10,7 +10,7 @@ class ApiService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('http://172.30.1.77:8083/user/register'),
+        Uri.parse('http://0.0.0.0:8083/user/register'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -42,7 +42,7 @@ class ApiService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('http://172.30.1.77:8083/user/login'),
+        Uri.parse('http://0.0.0.0:8083/user/login'),
         headers: {
           'Content-Type': 'application/json',
         },

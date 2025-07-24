@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           children: [
-            Text('홈페이지')
+            Text('홈페이지'),
           ],
         ),
       ),
