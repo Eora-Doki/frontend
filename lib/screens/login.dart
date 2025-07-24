@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
     final token = await ApiService.loginUser(email: email, password: password);
 
     if (token != null) {
-      print("로그인 성공! 토큰: $token");
+      print("로그인 성공: $token");
       await secureStorage.write(key: 'access_token', value: token);
       return true;
     } else {
