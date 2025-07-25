@@ -159,11 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomePage(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                ),
-                              ),
+                                builder: (context) => const HomePage()),
                             );
                           } else {
                             // 실패하는 경우

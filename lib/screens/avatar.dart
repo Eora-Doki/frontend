@@ -1,36 +1,21 @@
-import 'package:doki/screens/avatar.dart';
 import 'package:doki/screens/map.dart';
-import 'package:doki/screens/start.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: HomePage(),
+    home: AvatarPage(),
     debugShowCheckedModeBanner: false,
   ));
 }
 
-class Doki extends StatelessWidget {
-  const Doki({super.key});
+class AvatarPage extends StatefulWidget {
+  const AvatarPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Doki',
-      home: StartPage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
+  State<AvatarPage> createState() => _AvatarPageState();
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class _AvatarPageState extends State<AvatarPage> {
   int _selectedIndex = 2;
   final List<Widget> _pages = const [
     MapPage(),
@@ -77,6 +62,13 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
+
+          const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+            ),
+          ),
 
           IndexedStack(
             index: _selectedIndex,
