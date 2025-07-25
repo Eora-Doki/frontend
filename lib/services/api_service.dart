@@ -67,18 +67,18 @@ class ApiService {
     }
   }
 
-  static Future<bool> resetPassword(String email, String newPassword) async {
+  static Future<bool> resetPassword(String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('http://172.30.1.77:8083/api/reset-password'),
+        Uri.parse('http://0.0.0.0:8083/user/reset_password'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'email': email,
-          'newPassword': newPassword,
+          'password': password,
         }),
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 204) {
         print('비밀번호 변경 성공');
         return true;
       } else {
@@ -90,5 +90,4 @@ class ApiService {
       return false;
     }
   }
-
 }

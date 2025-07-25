@@ -1,3 +1,4 @@
+import 'package:doki/screens/start.dart';
 import 'package:doki/services/api_service.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +11,12 @@ class PasswordPage extends StatefulWidget {
 
 class _PasswordPageState extends State<PasswordPage> {
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   void dispose() {
     emailController.dispose();
-    newPasswordController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -80,7 +81,7 @@ class _PasswordPageState extends State<PasswordPage> {
                   const SizedBox(height: 16),
 
                   TextField(
-                    controller: newPasswordController,
+                    controller: passwordController,
                     obscureText: true,
                     cursorColor: const Color(0x80000000),
                     decoration: const InputDecoration(
@@ -113,12 +114,15 @@ class _PasswordPageState extends State<PasswordPage> {
                       ),
                         onPressed: () async {
                           final email = emailController.text;
-                          final newPassword = newPasswordController.text;
+                          final password = passwordController.text;
 
-                          final success = await ApiService.resetPassword(email, newPassword);
-
+                          final success = await ApiService.resetPassword(email, password);
                           if (success) {
-                            //
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => const StartPage()),
+                                  (route) => false,
+                            );
                           }
                         },
                         child: const Padding(
