@@ -1,4 +1,4 @@
-import 'package:doki/screens/avatar.dart';
+import 'package:doki/screens/home.dart';
 import 'package:doki/screens/password.dart';
 import 'package:doki/screens/register.dart';
 import 'package:flutter/material.dart';
@@ -159,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AvatarPage()),
+                                builder: (context) => HomePage()),
                             );
                           } else {
                             // 실패하는 경우
