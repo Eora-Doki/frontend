@@ -1,8 +1,8 @@
+import 'package:doki/screens/avatar.dart';
 import 'package:doki/screens/password.dart';
 import 'package:doki/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:doki/services/api_service.dart';
-import 'main.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -159,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const HomePage()),
+                                builder: (context) => AvatarPage()),
                             );
                           } else {
                             // 실패하는 경우
