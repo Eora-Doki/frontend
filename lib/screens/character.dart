@@ -21,24 +21,36 @@ class CharacterPage extends StatefulWidget {
 class _CharacterPageState extends State<CharacterPage> {
   String selectedCharacter = '';
   String selectedAnimation = '스파이패밀리';
+  String selectedCharacterImage = 'assets/images/sf_anya.png';
 
   final Map<String, List<Map<String, String>>> characterMap = {
     '스파이패밀리': [
       {'name': '아냐', 'image': 'assets/images/sf_anya.png'},
-      {'name': '본드', 'image': 'assets/images/sf_anya.png'},
-      {'name': '로이드', 'image': 'assets/images/sf_anya.png'},
+      {'name': '본드', 'image': 'assets/images/sf_bond.png'},
+      {'name': '로이드', 'image': 'assets/images/sf_loid.png'},
     ],
     '진격의거인': [
-      {'name': '리바이', 'image': 'assets/images/sf_anya.png'},
-      {'name': '옐렌예거', 'image': 'assets/images/sf_anya.png'},
-      {'name': '한지', 'image': 'assets/images/sf_anya.png'},
+      {'name': '리바이', 'image': 'assets/images/at_levi.png'},
+      {'name': '옐렌예거', 'image': 'assets/images/at_yeager.png'},
+      {'name': '한지', 'image': 'assets/images/at_hange.png'},
     ],
     '장송의프리렌': [
-      {'name': '프리렌', 'image': 'assets/images/sf_anya.png'},
-      {'name': '페른', 'image': 'assets/images/sf_anya.png'},
-      {'name': '슈타르크', 'image': 'assets/images/sf_anya.png'},
+      {'name': '프리렌', 'image': 'assets/images/fr_frieren.png'},
+      {'name': '페른', 'image': 'assets/images/fr_fern.png'},
+      {'name': '슈타르크', 'image': 'assets/images/fr_stark.png'},
     ],
   };
+
+  @override
+  void initState() {
+    super.initState();
+    final characters = characterMap[selectedAnimation];
+    if (characters != null && characters.isNotEmpty) {
+      selectedCharacter = characters[0]['name']!;
+      selectedCharacterImage = characters[0]['image']!;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +118,7 @@ class _CharacterPageState extends State<CharacterPage> {
             Padding(
               padding: const EdgeInsets.all(30),
               child: Image.asset(
-                'assets/images/sf_anya.png',
+                selectedCharacterImage,
                 width: 180,
                 height: 180,
               ),
@@ -148,16 +160,16 @@ class _CharacterPageState extends State<CharacterPage> {
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 13, right: 7),
+                        padding: const EdgeInsets.only(top: 6, right: 7),
                         child: SizedBox(
-                          width: 130,
+                          width: 100,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               backgroundColor: const Color(0xff69BF70),
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(15),
                               ),
                             ),
                             onPressed: () async {
@@ -176,12 +188,12 @@ class _CharacterPageState extends State<CharacterPage> {
                               }
                             },
                             child: const Padding(
-                              padding: EdgeInsets.only(top: 0),
+                              padding: EdgeInsets.only(top: 3),
                               child: Text(
                                 '완료',
                                 style: TextStyle(
                                   fontFamily: 'BlackHanSans-Regular',
-                                  fontSize: 20,
+                                  fontSize: 23,
                                 ),
                               ),
                             ),
@@ -210,8 +222,10 @@ class _CharacterPageState extends State<CharacterPage> {
           final characters = characterMap[animationName];
           if (characters != null && characters.isNotEmpty) {
             selectedCharacter = characters[0]['name']!;
+            selectedCharacterImage = characters[0]['image']!;
           } else {
             selectedCharacter = '';
+            selectedCharacterImage = 'assets/images/sf_anya.png';
           }
         });
       },
@@ -240,31 +254,32 @@ class _CharacterPageState extends State<CharacterPage> {
       onTap: () {
         setState(() {
           selectedCharacter = name;
+          selectedCharacterImage = imagePath;
         });
       },
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
-          border: isSelected
-              ? Border.all(color: Colors.white, width: 3)
-              : null,
-        ),
-        child: Column(
-          children: [
-            Image.asset(imagePath, width: 80, height: 80),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(
-                fontFamily: 'BlackHanSans-Regular',
-                fontSize: 16,
-                color: Colors.white,
-              ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(20),
+              border: isSelected
+                  ? Border.all(color: Colors.white, width: 3)
+                  : null,
             ),
-          ],
-        ),
+            child: Image.asset(imagePath, width: 80, height: 80),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            name,
+            style: const TextStyle(
+              fontFamily: 'BlackHanSans-Regular',
+              fontSize: 16,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }
