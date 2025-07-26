@@ -10,7 +10,9 @@ class AvatarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('dddd'),
+      child: Text(
+        ''
+      ),
     );
   }
 }

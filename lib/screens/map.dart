@@ -15,7 +15,7 @@ class _MapPageState extends State<MapPage> {
         child: Column(
           children: [
             Text(
-              'ㅎㅇ',
+              '지도',
             )
           ],
         ),
