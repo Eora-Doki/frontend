@@ -25,15 +25,15 @@ class _LoginPageState extends State<LoginPage> {
     final email = emailController.text;
     final password = passwordController.text;
 
-    final response = await ApiService.loginUser(email: email, password: password);
+    final data = await ApiService.loginUser(email: email, password: password);
 
-    if (response != null) {
-      final token = response['token'];
-      final character = response['character'];
+    if (data != null) {
+      final token = data['Authorization'];
+      final character = data['character'];
 
       await secureStorage.write(key: 'access_token', value: token);
 
-      final userController = Get.put(UserController());
+      final userController = Get.find<UserController>();
       userController.setCharacter(character);
 
       print("로그인 성공: token=$token, character=$character");

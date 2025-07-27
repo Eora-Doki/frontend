@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import 'store.dart';
+import 'inventory.dart';
 import 'avatar.dart';
 import '../map/map.dart';
 import '../../controllers/navigation_controller.dart';
@@ -152,12 +154,7 @@ class HomePage extends StatelessWidget {
                             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                           ),
                           backgroundColor: const Color(0xffBFEAC2),
-                          builder: (context) {
-                            return const SizedBox(
-                              height: 300,
-                              width: double.infinity,
-                            );
-                          },
+                          builder: (context) => const StoreModal(),
                         ).whenComplete(() {
                           controller.setModalOpen(false);
                         });
@@ -199,12 +196,7 @@ class HomePage extends StatelessWidget {
                             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                           ),
                           backgroundColor: const Color(0xffBFEAC2),
-                          builder: (context) {
-                            return const SizedBox(
-                              height: 300,
-                              width: double.infinity,
-                            );
-                          },
+                          builder: (context) => const InventoryModal(),
                         ).whenComplete(() {
                           controller.setModalOpen(false);
                         });
