@@ -87,6 +87,25 @@ flutter:
         - asset: assets/fonts/BlackHanSans-Regular.ttf
 
   assets:
-    - assets/images/
+    - assets/images/avatars/at_hange.png
+    - assets/images/avatars/at_levi.png
+    - assets/images/avatars/at_yeager.png
+    - assets/images/avatars/fr_fern.png
+    - assets/images/avatars/fr_frieren.png
+    - assets/images/avatars/fr_stark.png
+    - assets/images/avatars/sf_anya.png
+    - assets/images/avatars/sf_bond.png
+    - assets/images/avatars/sf_loid.png
+
+    - assets/images/backgrounds/bg_at.png
+    - assets/images/backgrounds/bg_basic.png
+    - assets/images/backgrounds/bg_boutique.png
+    - assets/images/backgrounds/bg_fr.png
+    - assets/images/backgrounds/bg_sf.png
+
+    - assets/images/concepts/sf_anya_1.png
+    - assets/images/concepts/sf_anya_2.png
+    - assets/images/concepts/sf_anya_3.png
+    - assets/images/concepts/sf_anya_4.png
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

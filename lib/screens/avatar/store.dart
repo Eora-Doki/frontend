@@ -12,7 +12,7 @@ class StoreModal extends StatefulWidget {
 }
 
 class _StoreModalState extends State<StoreModal> {
-  int selectedIndex = 0;
+  int selectedIndex = -1;
   String selectedCategory = '아바타';
   List<String> itemList = [];
 
@@ -58,11 +58,11 @@ class _StoreModalState extends State<StoreModal> {
           children: [
             const SizedBox(height: 15),
             const Text(
-              '※기본 아바타를 보유하고 있어야 컨셉을 구매할 수 있습니다!',
+              '기본 아바타를 보유하고 있어야 컨셉을 구매할 수 있습니다!',
               style: TextStyle(
                 fontFamily: 'BlackHanSans-Regular',
                 color: Colors.white,
-                fontSize: 15,
+                fontSize: 14,
               ),
             ),
 
@@ -80,6 +80,8 @@ class _StoreModalState extends State<StoreModal> {
                     onPressed: () {
                       setState(() {
                         selectedCategory = '아바타';
+                        itemList = avatarList;
+                        selectedIndex = -1;
                       });
                     },
                     child: const Text(
@@ -141,19 +143,20 @@ class _StoreModalState extends State<StoreModal> {
                     ),
                   ),
                 ),
-
-                Expanded(
-                  child: StoreItems(
-                    imagePath: itemList,
-                    selectedIndex: selectedIndex,
-                    onSelect: (index) {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                    }
-                  ),
-                ),
               ],
+            ),
+
+            const SizedBox(height: 10),
+            Expanded(
+              child: StoreItems(
+                  imagePath: itemList,
+                  selectedIndex: selectedIndex,
+                  onSelect: (index) {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  }
+              ),
             ),
           ],
         ),
