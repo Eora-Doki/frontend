@@ -1,6 +1,7 @@
-import 'package:doki/screens/login/start.dart';
-import 'package:doki/services/api_service.dart';
 import 'package:flutter/material.dart';
+
+import 'start.dart';
+import '../../services/api_service.dart';
 
 class PasswordPage extends StatefulWidget {
   const PasswordPage({super.key});

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'nickname.dart';
 
 class Register extends StatelessWidget {

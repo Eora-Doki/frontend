@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'character.dart';
 
 class NicknamePage extends StatefulWidget {

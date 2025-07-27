@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '/controllers/user_controller.dart';
-import '/screens/login/start.dart';
+import './controllers/user_controller.dart';
+import './screens/login/start.dart';
 
 void main() {
   Get.put(UserController());

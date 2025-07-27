@@ -1,6 +1,7 @@
-import 'package:doki/screens/login/start.dart';
 import 'package:flutter/material.dart';
-import 'package:doki/services/api_service.dart';
+
+import '../../services/api_service.dart';
+import 'start.dart';
 
 class CharacterPage extends StatefulWidget {
   final String email;
