@@ -54,8 +54,13 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print('로그인 성공: ${data['Authorization']}');
-        return data;
+        final token = data['Authorization'];
+        final character = data['character'];
+        print('로그인 성공: $token, character=$character');
+        return {
+          'token': token,
+          'character': character,
+        };
       } else {
         print('로그인 실패: ${response.statusCode} ${response.body}');
         return null;
