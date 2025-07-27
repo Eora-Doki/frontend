@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../screens/avatar.dart';
-import '../screens/map.dart';
-import '../controllers/navigation_controller.dart';
+import 'avatar.dart';
+import '../map/map.dart';
+import '../../controllers/navigation_controller.dart';
 
 void main() {
   runApp(const Home());
@@ -87,12 +87,14 @@ class HomePage extends StatelessWidget {
 
       body: Stack(
         children: [
-          Positioned.fill(
+          Obx(() => Positioned.fill(
             child: Image.asset(
-              'assets/images/background_basic.png',
+              controller.isModalOpen.value
+                ? 'assets/images/bg_boutique.png'
+                : 'assets/images/bg_basic.png',
               fit: BoxFit.cover,
             ),
-          ),
+          )),
 
 
           Row(
@@ -120,95 +122,109 @@ class HomePage extends StatelessWidget {
             ],
           ),
 
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 110,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff69BF70),
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: () {
-                        showModalBottomSheet(
+          Obx(() => AnimatedPositioned(
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeOut,
+            bottom: controller.isModalOpen.value ? 250 : 20,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 110,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff69BF70),
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () async {
+                      if (controller.isModalOpen.value) {
+                        Navigator.pop(context);
+                      } else {
+                        controller.setModalOpen(true);
+                        await showModalBottomSheet(
                           context: context,
+                          useRootNavigator: true,
+                          isScrollControlled: true,
+                          barrierColor: Colors.transparent,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                           ),
-                          backgroundColor: Colors.white,
+                          backgroundColor: const Color(0xffBFEAC2),
                           builder: (context) {
-                            return const Padding(
-                              padding: EdgeInsets.all(20),
-                              child: SizedBox(
-                                height: 300,
-                              ),
+                            return const SizedBox(
+                              height: 300,
+                              width: double.infinity,
                             );
                           },
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 5),
-                        child: Text(
-                          '상점',
-                          style: TextStyle(
-                            fontFamily: 'BlackHanSans-Regular',
-                            fontSize: 20,
-                          ),
+                        ).whenComplete(() {
+                          controller.setModalOpen(false);
+                        });
+                      }
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Text(
+                        '상점',
+                        style: TextStyle(
+                          fontFamily: 'BlackHanSans-Regular',
+                          fontSize: 20,
                         ),
                       ),
                     ),
                   ),
+                ),
 
-                  const SizedBox(width: 20),
+                const SizedBox(width: 20),
 
-                  SizedBox(
-                    width: 120,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff69BF70),
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: () {
-                        showModalBottomSheet(
+                SizedBox(
+                  width: 120,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff69BF70),
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () async {
+                      if (controller.isModalOpen.value) {
+                        Navigator.pop(context);
+                      } else {
+                        controller.setModalOpen(true);
+                        await showModalBottomSheet(
                           context: context,
+                          useRootNavigator: true,
+                          isScrollControlled: true,
+                          barrierColor: Colors.transparent,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                           ),
-                          backgroundColor: Colors.white,
+                          backgroundColor: const Color(0xffBFEAC2),
                           builder: (context) {
-                            return const SafeArea(
-                              child: Padding(
-                                padding: EdgeInsets.all(0),
-                                child: SizedBox(
-                                  height: 300,
-                                  width: 500,
-                                ),
-                              ),
+                            return const SizedBox(
+                              height: 300,
+                              width: double.infinity,
                             );
                           },
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 5),
-                        child: Text(
-                          '인벤토리',
-                          style: TextStyle(
-                            fontFamily: 'BlackHanSans-Regular',
-                            fontSize: 20,
-                          ),
+                        ).whenComplete(() {
+                          controller.setModalOpen(false);
+                        });
+                      }
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Text(
+                        '인벤토리',
+                        style: TextStyle(
+                          fontFamily: 'BlackHanSans-Regular',
+                          fontSize: 20,
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
+          )),
 
           Obx(() => IndexedStack(
             index: controller.selectedIndex.value,

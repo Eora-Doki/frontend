@@ -1,6 +1,6 @@
-import 'package:doki/screens/home.dart';
-import 'package:doki/screens/password.dart';
-import 'package:doki/screens/register.dart';
+import 'package:doki/screens/avatar/home.dart';
+import 'package:doki/screens/login/password.dart';
+import 'package:doki/screens/login/register.dart';
 import 'package:flutter/material.dart';
 import 'package:doki/services/api_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

@@ -1,4 +1,4 @@
-import 'package:doki/screens/start.dart';
+import 'package:doki/screens/login/start.dart';
 import 'package:doki/services/api_service.dart';
 import 'package:flutter/material.dart';
 
