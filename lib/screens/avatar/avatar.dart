@@ -33,7 +33,7 @@ class AvatarPage extends StatelessWidget {
               Transform.translate(
                 offset: const Offset(0, -50),
                 child: Image.asset(
-                    'assets/images/${userController.character.value.isNotEmpty ? userController.character.value : 'sf_bond'}.png',
+                    'assets/images/avatars/${userController.character.value.isNotEmpty ? userController.character.value : 'sf_bond'}.png',
                   height: 150
                 ),
               ),

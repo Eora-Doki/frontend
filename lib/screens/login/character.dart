@@ -22,24 +22,24 @@ class CharacterPage extends StatefulWidget {
 class _CharacterPageState extends State<CharacterPage> {
   String selectedCharacterName = '';
   String selectedAnimation = '스파이패밀리';
-  String selectedCharacterImage = 'assets/images/sf_anya.png';
+  String selectedCharacterImage = 'assets/images/avatars/sf_anya.png';
   String selectedCharacter = '';
 
   final Map<String, List<Map<String, String>>> characterMap = {
     '스파이패밀리': [
-      {'name': '아냐', 'image': 'assets/images/sf_anya.png', 'character': 'sf_anya'},
-      {'name': '본드', 'image': 'assets/images/sf_bond.png', 'character': 'sf_bond'},
-      {'name': '로이드', 'image': 'assets/images/sf_loid.png', 'character': 'sf_loid'},
+      {'name': '아냐', 'image': 'assets/images/avatars/sf_anya.png', 'character': 'sf_anya'},
+      {'name': '본드', 'image': 'assets/images/avatars/sf_bond.png', 'character': 'sf_bond'},
+      {'name': '로이드', 'image': 'assets/images/avatars/sf_loid.png', 'character': 'sf_loid'},
     ],
     '진격의거인': [
-      {'name': '리바이', 'image': 'assets/images/at_levi.png', 'character': 'at_levi'},
-      {'name': '옐렌예거', 'image': 'assets/images/at_yeager.png', 'character': 'at_yeager'},
-      {'name': '한지', 'image': 'assets/images/at_hange.png', 'character': 'at_hange'},
+      {'name': '리바이', 'image': 'assets/images/avatars/at_levi.png', 'character': 'at_levi'},
+      {'name': '옐렌예거', 'image': 'assets/images/avatars/at_yeager.png', 'character': 'at_yeager'},
+      {'name': '한지', 'image': 'assets/images/avatars/at_hange.png', 'character': 'at_hange'},
     ],
     '장송의프리렌': [
-      {'name': '프리렌', 'image': 'assets/images/fr_frieren.png', 'character': 'fr_frieren'},
-      {'name': '페른', 'image': 'assets/images/fr_fern.png', 'character': 'fr_fern'},
-      {'name': '슈타르크', 'image': 'assets/images/fr_stark.png', 'character': 'fr_stark'},
+      {'name': '프리렌', 'image': 'assets/images/avatars/fr_frieren.png', 'character': 'fr_frieren'},
+      {'name': '페른', 'image': 'assets/images/avatars/fr_fern.png', 'character': 'fr_fern'},
+      {'name': '슈타르크', 'image': 'assets/images/avatars/fr_stark.png', 'character': 'fr_stark'},
     ],
   };
 
@@ -228,7 +228,7 @@ class _CharacterPageState extends State<CharacterPage> {
             selectedCharacterImage = characters[0]['image']!;
           } else {
             selectedCharacterName = '';
-            selectedCharacterImage = 'assets/images/sf_anya.png';
+            selectedCharacterImage = 'assets/images/avatars/sf_anya.png';
           }
         });
       },

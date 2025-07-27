@@ -94,12 +94,12 @@ class HomePage extends StatelessWidget {
               ? Transform.translate(
                 offset: const Offset(0, -150),
                 child: Image.asset(
-                  'assets/images/bg_boutique.png',
+                  'assets/images/backgrounds/bg_boutique.png',
                   fit: BoxFit.cover,
                 ),
               )
             : Image.asset(
-              'assets/images/bg_basic.png',
+              'assets/images/backgrounds/bg_basic.png',
               fit: BoxFit.cover,
               ),
           )),
