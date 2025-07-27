@@ -90,12 +90,18 @@ class HomePage extends StatelessWidget {
       body: Stack(
         children: [
           Obx(() => Positioned.fill(
-            child: Image.asset(
-              controller.isModalOpen.value
-                ? 'assets/images/bg_boutique.png'
-                : 'assets/images/bg_basic.png',
+            child: controller.isModalOpen.value
+              ? Transform.translate(
+                offset: const Offset(0, -150),
+                child: Image.asset(
+                  'assets/images/bg_boutique.png',
+                  fit: BoxFit.cover,
+                ),
+              )
+            : Image.asset(
+              'assets/images/bg_basic.png',
               fit: BoxFit.cover,
-            ),
+              ),
           )),
 
 
