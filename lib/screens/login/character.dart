@@ -19,25 +19,26 @@ class CharacterPage extends StatefulWidget {
 }
 
 class _CharacterPageState extends State<CharacterPage> {
-  String selectedCharacter = '';
+  String selectedCharacterName = '';
   String selectedAnimation = '스파이패밀리';
   String selectedCharacterImage = 'assets/images/sf_anya.png';
+  String selectedCharacter = '';
 
   final Map<String, List<Map<String, String>>> characterMap = {
     '스파이패밀리': [
-      {'name': '아냐', 'image': 'assets/images/sf_anya.png'},
-      {'name': '본드', 'image': 'assets/images/sf_bond.png'},
-      {'name': '로이드', 'image': 'assets/images/sf_loid.png'},
+      {'name': '아냐', 'image': 'assets/images/sf_anya.png', 'character': 'sf_anya'},
+      {'name': '본드', 'image': 'assets/images/sf_bond.png', 'character': 'sf_bond'},
+      {'name': '로이드', 'image': 'assets/images/sf_loid.png', 'character': 'sf_loid'},
     ],
     '진격의거인': [
-      {'name': '리바이', 'image': 'assets/images/at_levi.png'},
-      {'name': '옐렌예거', 'image': 'assets/images/at_yeager.png'},
-      {'name': '한지', 'image': 'assets/images/at_hange.png'},
+      {'name': '리바이', 'image': 'assets/images/at_levi.png', 'character': 'at_levi'},
+      {'name': '옐렌예거', 'image': 'assets/images/at_yeager.png', 'character': 'at_yeager'},
+      {'name': '한지', 'image': 'assets/images/at_hange.png', 'character': 'at_hange'},
     ],
     '장송의프리렌': [
-      {'name': '프리렌', 'image': 'assets/images/fr_frieren.png'},
-      {'name': '페른', 'image': 'assets/images/fr_fern.png'},
-      {'name': '슈타르크', 'image': 'assets/images/fr_stark.png'},
+      {'name': '프리렌', 'image': 'assets/images/fr_frieren.png', 'character': 'fr_frieren'},
+      {'name': '페른', 'image': 'assets/images/fr_fern.png', 'character': 'fr_fern'},
+      {'name': '슈타르크', 'image': 'assets/images/fr_stark.png', 'character': 'fr_stark'},
     ],
   };
 
@@ -46,8 +47,9 @@ class _CharacterPageState extends State<CharacterPage> {
     super.initState();
     final characters = characterMap[selectedAnimation];
     if (characters != null && characters.isNotEmpty) {
-      selectedCharacter = characters[0]['name']!;
+      selectedCharacterName = characters[0]['name']!;
       selectedCharacterImage = characters[0]['image']!;
+      selectedCharacter = characters[0]['character']!;
     }
   }
 
@@ -153,7 +155,7 @@ class _CharacterPageState extends State<CharacterPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: characterMap[selectedAnimation]!.map((character) {
-                        return _buildCharacter(character['name']!, character['image']!);
+                        return _buildCharacter(character['name']!, character['image']!, character['character']!);
                       }).toList(),
                     ),
 
@@ -221,10 +223,10 @@ class _CharacterPageState extends State<CharacterPage> {
           selectedAnimation = animationName;
           final characters = characterMap[animationName];
           if (characters != null && characters.isNotEmpty) {
-            selectedCharacter = characters[0]['name']!;
+            selectedCharacterName = characters[0]['name']!;
             selectedCharacterImage = characters[0]['image']!;
           } else {
-            selectedCharacter = '';
+            selectedCharacterName = '';
             selectedCharacterImage = 'assets/images/sf_anya.png';
           }
         });
@@ -247,14 +249,15 @@ class _CharacterPageState extends State<CharacterPage> {
   }
 
   // 캐릭터 탭 생성 함수
-  Widget _buildCharacter(String name, String imagePath) {
-    final bool isSelected = selectedCharacter == name;
+  Widget _buildCharacter(String name, String imagePath, String character) {
+    final bool isSelected = selectedCharacterName == name;
 
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedCharacter = name;
+          selectedCharacterName = name;
           selectedCharacterImage = imagePath;
+          selectedCharacter = character;
         });
       },
       child: Column(

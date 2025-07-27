@@ -1,9 +1,12 @@
-import 'package:doki/screens/avatar/home.dart';
-import 'package:doki/screens/login/password.dart';
-import 'package:doki/screens/login/register.dart';
 import 'package:flutter/material.dart';
-import 'package:doki/services/api_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/user_controller.dart';
+import '../../services/api_service.dart';
+import '../avatar/home.dart';
+import 'password.dart';
+import 'register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,11 +25,18 @@ class _LoginPageState extends State<LoginPage> {
     final email = emailController.text;
     final password = passwordController.text;
 
-    final token = await ApiService.loginUser(email: email, password: password);
+    final response = await ApiService.loginUser(email: email, password: password);
 
-    if (token != null) {
-      print("로그인 성공: $token");
+    if (response != null) {
+      final token = response['token'];
+      final character = response['character'];
+
       await secureStorage.write(key: 'access_token', value: token);
+
+      final userController = Get.put(UserController());
+      userController.setCharacter(character);
+
+      print("로그인 성공: token=$token, character=$character");
       return true;
     } else {
       print("로그인 실패");

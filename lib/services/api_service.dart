@@ -36,7 +36,7 @@ class ApiService {
     }
   }
 
-  static Future<String?> loginUser({
+  static Future<Map<String, dynamic>?> loginUser({
     required String email,
     required String password,
   }) async {
