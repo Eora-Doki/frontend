@@ -24,9 +24,9 @@ class ApiService {
         }),
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 201) {
         final data = jsonDecode(response.body);
-        print('회원가입 성공: ${data['message']}');
+        print('회원가입 성공: id=${data['id']}, email=${data['email']}');
         return true;
       } else {
         print('회원가입 실패: ${response.statusCode} ${response.body}');
