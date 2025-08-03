@@ -258,7 +258,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-extension on bool {
-  operator [](String other) {}
-}
