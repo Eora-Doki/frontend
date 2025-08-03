@@ -1,4 +1,6 @@
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 
 class ApiService {
@@ -10,7 +12,7 @@ class ApiService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('http://0.0.0.0:8083/user/register'),
+        Uri.parse('http://0.0.0.0:8083/users/register'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -36,13 +38,10 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>?> loginUser({
-    required String email,
-    required String password,
-  }) async {
+  static Future<bool> loginUser(String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('http://0.0.0.0:8083/user/login'),
+        Uri.parse('http://0.0.0.0:8083/users/login'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -54,28 +53,35 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final token = data['Authorization'];
-        final character = data['character'];
-        print('로그인 성공: $token, character=$character');
-        return {
-          'token': token,
-          'character': character,
-        };
+        final prefs = await SharedPreferences.getInstance();
+
+        await prefs.setString('accessToken', data['Authorization']);
+        await prefs.setString('userId', data['id']);
+
+        print('로그인 성공!');
+        return true;
       } else {
-        print('로그인 실패: ${response.statusCode} ${response.body}');
-        return null;
+        print('로그인 실패: ${response.body}');
+        return false;
       }
     } catch (e) {
-      print("로그인 오류: $e");
-      return null;
+      print('로그인 오류: $e');
+      return false;
     }
   }
 
+  static const FlutterSecureStorage secureStorage = FlutterSecureStorage();
   static Future<bool> resetPassword(String email, String password) async {
     try {
-      final response = await http.post(
-        Uri.parse('http://0.0.0.0:8083/user/reset_password'),
-        headers: {'Content-Type': 'application/json'},
+      final token = await secureStorage.read(key: 'access_token');
+      final userId = await secureStorage.read(key: 'user_id');
+
+      final response = await http.patch(
+        Uri.parse('http://0.0.0.0:8083/users/$userId/password'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
         body: jsonEncode({
           'email': email,
           'password': password,
@@ -93,5 +99,10 @@ class ApiService {
       print('비밀번호 변경 오류: $e');
       return false;
     }
+  }
+
+  static Future<String?> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('accessToken');
   }
 }

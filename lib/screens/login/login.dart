@@ -25,24 +25,21 @@ class _LoginPageState extends State<LoginPage> {
     final email = emailController.text;
     final password = passwordController.text;
 
-    final data = await ApiService.loginUser(email: email, password: password);
+    final data = await ApiService.loginUser(email, password);
 
-    if (data != null) {
-      final token = data['Authorization'];
-      final character = data['character'];
+    final token = data['Authorization'];
+    final character = data['character'];
+    final userId = data['id'];
 
-      await secureStorage.write(key: 'access_token', value: token);
+    await secureStorage.write(key: 'access_token', value: token);
+    await secureStorage.write(key: 'user_id', value: userId);
 
-      final userController = Get.find<UserController>();
-      userController.setCharacter(character);
+    final userController = Get.find<UserController>();
+    userController.setCharacter(character);
 
-      print("로그인 성공: token=$token, character=$character");
-      return true;
-    } else {
-      print("로그인 실패");
-      return false;
+    print("로그인 성공: token=$token, userId=$userId, character=$character");
+    return true;
     }
-  }
 
   @override
   void dispose() {
@@ -255,4 +252,8 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+}
+
+extension on bool {
+  operator [](String other) {}
 }
