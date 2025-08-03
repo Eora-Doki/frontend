@@ -27,6 +27,11 @@ class _LoginPageState extends State<LoginPage> {
 
     final data = await ApiService.loginUser(email, password);
 
+    if (data == null) {
+      print("로그인 실패: 응답 null");
+      return false;
+    }
+
     final token = data['Authorization'];
     final character = data['character'];
     final userId = data['id'];

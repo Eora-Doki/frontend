@@ -38,7 +38,7 @@ class ApiService {
     }
   }
 
-  static Future<bool> loginUser(String email, String password) async {
+  static Future<Map<String, dynamic>?> loginUser(String email, String password) async {
     try {
       final response = await http.post(
         Uri.parse('http://0.0.0.0:8083/users/login'),
@@ -53,20 +53,17 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final prefs = await SharedPreferences.getInstance();
-
-        await prefs.setString('accessToken', data['Authorization']);
-        await prefs.setString('userId', data['id']);
-
+        await secureStorage.write(key: 'access_token', value: data['Authorization']);
+        await secureStorage.write(key: 'user_id', value: data['id']);
         print('로그인 성공!');
-        return true;
+        return data;
       } else {
         print('로그인 실패: ${response.body}');
-        return false;
+        return null;
       }
     } catch (e) {
       print('로그인 오류: $e');
-      return false;
+      return null;
     }
   }
 
@@ -88,6 +85,9 @@ class ApiService {
         }),
       );
 
+      print('토큰: $token');
+      print('아이디: $userId');
+
       if (response.statusCode == 200 || response.statusCode == 204) {
         print('비밀번호 변경 성공');
         return true;
@@ -99,10 +99,5 @@ class ApiService {
       print('비밀번호 변경 오류: $e');
       return false;
     }
-  }
-
-  static Future<String?> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('accessToken');
   }
 }
