@@ -7,55 +7,41 @@
         html, body { margin: 0; padding: 0; height: 100%; }
         #map { width: 100%; height: 100%; }
     </style>
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=d172d22c60e3873dff49ddbd4c0526fb&autoload=false"></script>
 </head>
 <body>
 <div id="map"></div>
 
-<script type="text/javascript">
+<script>
     let map;
     let marker;
 
     function initMap(lat, lng) {
-      const mapContainer = document.getElementById('map');
-      const mapOption = {
-        center: new kakao.maps.LatLng(latitude, longitude),
+      const container = document.getElementById('map');
+      const options = {
+        center: new kakao.maps.LatLng(lat, lng),
         level: 3
       };
-      map = new kakao.maps.Map(mapContainer, mapOption);
+      map = new kakao.maps.Map(container, options);
 
       marker = new kakao.maps.Marker({
-        position: new kakao.maps.LatLng(latitude, longitude),
+        position: new kakao.maps.LatLng(lat, lng),
         map: map
       });
-    }
 
-    function addMarker(latitude, longitude) {
-      const marker = new kakao.maps.Marker({
-        position: new kakao.maps.LatLng(latitude, longitude),
-        map: map
-      });
+      console.log("✅ initMap 실행됨:", lat, lng);
     }
 
     function updateLocation(lat, lng) {
-      const newPos = new kakao.maps.LatLng(latitude, longitude);
-
-      if (map && marker) {
-        map.setCenter(newPos);
-        marker.setPosition(newPos);
-      } else {
-        initMap(latitude, longitude);
-      }
+      console.log("📍 updateLocation 호출:", lat, lng);
+      initMap(lat, lng);
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-      const script = document.createElement('script');
-      script.onload = function() {
-        kakao.maps.load(function() {
-          window.flutter_inappwebview.callHandler('ready');
-        });
-      };
-      script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=d172d22c60e3873dff49ddbd4c0526fb&autoload=false";
-      document.head.appendChild(script);
+    document.addEventListener("DOMContentLoaded", function () {
+      kakao.maps.load(function () {
+        initMap(36.3863372, 127.3154585);
+        console.log("✅ Kakao map SDK 로드 완료");
+      });
     });
 </script>
 </body>

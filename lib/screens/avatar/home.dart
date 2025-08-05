@@ -43,6 +43,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xffB2ECB7),
         title: const Text(
           'Doki',

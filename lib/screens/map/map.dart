@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-import '../../services/api_service.dart';
 import '../../services/location_service.dart';
 
 class MapPage extends StatefulWidget {
@@ -13,7 +11,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  late final WebViewController _controller;
+  WebViewController? _controller;
 
   @override
   void initState() {
@@ -23,48 +21,44 @@ class _MapPageState extends State<MapPage> {
 
   Future<void> _loadHtml() async {
     final htmlMap = await rootBundle.loadString('assets/kakao_map.html');
-    _controller = WebViewController()
+
+    final controller = WebViewController();
+    controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..addJavaScriptChannel(
-        'ready',
-        onMessageReceived: (message) async {
+      ..setNavigationDelegate(NavigationDelegate(
+        onPageFinished: (url) async {
+          print("✅ Page finished loading");
+
           final position = await LocationService.getCurrentLocation();
           if (position != null) {
-            final latitude = position['latitude'];
-            final longitude = position['longitude'];
+            final lat = position['latitude'];
+            final lng = position['longitude'];
 
-            await _controller.runJavaScript("updateLocation($latitude, $longitude);");
-
-            final stores = await ApiService.getNearbyStores(
-              latitude: latitude,
-              longitude: longitude,
-            );
-
-            for (final store in stores) {
-              final storeLat = store['latitude'];
-              final storeLng = store['longitude'];
-              await _controller.runJavaScript("addMarker($storeLat, $storeLng);");
+            try {
+              print("📍 위치: $lat, $lng");
+              await controller.runJavaScript("updateLocation($lat, $lng);");
+              print("✅ 지도 초기화 완료");
+            } catch (e) {
+              print("❌ JS 호출 실패: $e");
             }
+          } else {
+            print("❌ 현재 위치 가져오기 실패");
           }
-        },
-      )
-      ..setNavigationDelegate(NavigationDelegate(
-        onWebResourceError: (error) {
-          print("WebView error: ${error.description}");
-        },
-        onPageFinished: (url) {
-          print("Page finished loading: $url");
         },
       ))
       ..loadHtmlString(htmlMap);
 
-    setState(() {}); // 웹뷰 리빌드
+    setState(() {
+      _controller = controller;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WebViewWidget(controller: _controller),
+      body: _controller == null
+          ? const Center(child: CircularProgressIndicator())
+          : WebViewWidget(controller: _controller!),
     );
   }
 }
