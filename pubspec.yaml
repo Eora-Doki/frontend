@@ -89,6 +89,26 @@ flutter:
       fonts:
         - asset: assets/fonts/BlackHanSans-Regular.ttf
 
+    - family: EncodeSansSemiExpanded-Bold
+      fonts:
+        - asset: assets/fonts/EncodeSansSemiExpanded-Bold.ttf
+
+    - family: EncodeSansSemiExpanded-Light
+      fonts:
+        - asset: assets/fonts/EncodeSansSemiExpanded-Light.ttf
+
+    - family: EncodeSansSemiExpanded-Medium
+      fonts:
+        - asset: assets/fonts/EncodeSansSemiExpanded-Medium.ttf
+
+    - family: EncodeSansSemiExpanded-Regular
+      fonts:
+        - asset: assets/fonts/EncodeSansSemiExpanded-Regular.ttf
+
+    - family: EncodeSansSemiExpanded-SemiBold
+      fonts:
+        - asset: assets/fonts/EncodeSansSemiExpanded-SemiBold.ttf
+
   assets:
     - assets/kakao_map.html
 

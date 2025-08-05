@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../services/api_service.dart';
 import '../../services/location_service.dart';
 
 class MapPage extends StatefulWidget {
@@ -31,7 +32,19 @@ class _MapPageState extends State<MapPage> {
           if (position != null) {
             final latitude = position['latitude'];
             final longitude = position['longitude'];
+
             await _controller.runJavaScript("updateLocation($latitude, $longitude);");
+
+            final stores = await ApiService.getNearbyStores(
+              latitude: latitude,
+              longitude: longitude,
+            );
+
+            for (final store in stores) {
+              final storeLat = store['latitude'];
+              final storeLng = store['longitude'];
+              await _controller.runJavaScript("addMarker($storeLat, $storeLng);");
+            }
           }
         },
       )
@@ -47,7 +60,6 @@ class _MapPageState extends State<MapPage> {
 
     setState(() {}); // 웹뷰 리빌드
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -100,17 +100,18 @@ class ApiService {
     }
   }
 
-  Future<List<Map<String, dynamic>>> fetchStores(double latitude, double longitude) async {
+  static Future<List<Map<String, dynamic>>> getNearbyStores({
+    required double latitude,
+    required double longitude,
+  }) async {
     final url = Uri.parse('http://0.0.0.0:8083/stores?latitude=$latitude&longitude=$longitude');
-
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      final List<dynamic> jsonList = json.decode(response.body);
-      return jsonList.cast<Map<String, dynamic>>();
+      final List<dynamic> body = jsonDecode(response.body);
+      return body.map((item) => item as Map<String, dynamic>).toList();
     } else {
-      throw Exception('로드 실패: ${response.statusCode}');
+      throw Exception('로드 실패');
     }
   }
-
 }

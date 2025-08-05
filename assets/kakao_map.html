@@ -13,24 +13,42 @@
 
 <script type="text/javascript">
     let map;
+    let marker;
 
     function initMap(lat, lng) {
-      var mapContainer = document.getElementById('map');
-      var mapOption = {
+      const mapContainer = document.getElementById('map');
+      const mapOption = {
         center: new kakao.maps.LatLng(latitude, longitude),
         level: 3
       };
       map = new kakao.maps.Map(mapContainer, mapOption);
 
-      var marker = new kakao.maps.LatLng(latitude, longitude);
-      var marker = new kakao.maps.Marker({
-        position: marker
+      marker = new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(latitude, longitude),
+        map: map
       });
-      marker.setMap(map);
+    }
+
+    function addMarker(latitude, longitude) {
+      const marker = new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(latitude, longitude),
+        map: map
+      });
+    }
+
+    function updateLocation(lat, lng) {
+      const newPos = new kakao.maps.LatLng(latitude, longitude);
+
+      if (map && marker) {
+        map.setCenter(newPos);
+        marker.setPosition(newPos);
+      } else {
+        initMap(latitude, longitude);
+      }
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-      var script = document.createElement('script');
+      const script = document.createElement('script');
       script.onload = function() {
         kakao.maps.load(function() {
           window.flutter_inappwebview.callHandler('ready');
@@ -39,10 +57,6 @@
       script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=d172d22c60e3873dff49ddbd4c0526fb&autoload=false";
       document.head.appendChild(script);
     });
-
-    function updateLocation(lat, lng) {
-      initMap(latitude, longitude);
-    }
 </script>
 </body>
 </html>
