@@ -34,3 +34,5 @@ ios/Pods/
 ios/Flutter/Generated.xcconfig
 ios/Flutter/GeneratedPluginRegistrant.*
 ios/Flutter/ephemeral/
+
+.env

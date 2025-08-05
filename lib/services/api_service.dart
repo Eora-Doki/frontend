@@ -1,5 +1,4 @@
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 
@@ -100,4 +99,18 @@ class ApiService {
       return false;
     }
   }
+
+  Future<List<Map<String, dynamic>>> fetchStores(double latitude, double longitude) async {
+    final url = Uri.parse('http://0.0.0.0:8083/stores?latitude=$latitude&longitude=$longitude');
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonList = json.decode(response.body);
+      return jsonList.cast<Map<String, dynamic>>();
+    } else {
+      throw Exception('로드 실패: ${response.statusCode}');
+    }
+  }
+
 }
