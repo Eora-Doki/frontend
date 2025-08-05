@@ -90,6 +90,8 @@ flutter:
         - asset: assets/fonts/BlackHanSans-Regular.ttf
 
   assets:
+    - assets/kakao_map.html
+
     - assets/images/avatars/at_hange.png
     - assets/images/avatars/at_levi.png
     - assets/images/avatars/at_yeager.png
