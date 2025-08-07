@@ -5,6 +5,9 @@ import 'package:intl/intl.dart';
 import 'store.dart';
 import 'inventory.dart';
 import 'avatar.dart';
+import '../information/information.dart';
+import '../trade/trade.dart';
+import '../wishlist/wishlist.dart';
 import '../map/map.dart';
 import '../../controllers/navigation_controller.dart';
 
@@ -31,10 +34,10 @@ class HomePage extends StatelessWidget {
 
   final List<Widget> _pages = const [
     MapPage(),
-    MapPage(),
+    TradePage(),
     AvatarPage(),
-    MapPage(),
-    MapPage(),
+    WishlistPage(),
+    InfoPage(),
   ];
 
   final today = DateFormat('yyyy년 MM월 dd일').format(DateTime.now());

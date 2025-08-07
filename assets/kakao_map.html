@@ -55,7 +55,9 @@
         });
 
         const infoWindow = new kakao.maps.InfoWindow({
-          content: `<div style="padding:5px; font-size:14px;">${store.name}</div>`
+          content: `<div style="
+            padding:5px; font-size:14px;">${store.name}
+          </div>`
         });
 
         kakao.maps.event.addListener(marker, 'click', () => {
