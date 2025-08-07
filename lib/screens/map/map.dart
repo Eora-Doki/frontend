@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../services/api_service.dart';
 import '../../services/location_service.dart';
 
 class MapPage extends StatefulWidget {
@@ -26,25 +29,24 @@ class _MapPageState extends State<MapPage> {
     controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(NavigationDelegate(
-        onPageFinished: (url) async {
-          print("✅ Page finished loading");
+          onPageFinished: (url) async {
+            final position = await LocationService.getCurrentLocation();
+            if (position != null) {
+              final lat = position['latitude'];
+              final lng = position['longitude'];
+              print("현재 위치: $lat, $lng");
 
-          final position = await LocationService.getCurrentLocation();
-          if (position != null) {
-            final lat = position['latitude'];
-            final lng = position['longitude'];
+              await controller.runJavaScript("initMap($lat, $lng);");
 
-            try {
-              print("📍 위치: $lat, $lng");
-              await controller.runJavaScript("updateLocation($lat, $lng);");
-              print("✅ 지도 초기화 완료");
-            } catch (e) {
-              print("❌ JS 호출 실패: $e");
+              final stores = await ApiService.getNearbyStores(lat: lat, lng: lng);
+              final jsonString = jsonEncode(stores).replaceAll("'", r"\'");
+              await controller.runJavaScript("addStoreMarkers('$jsonString');");
+
+              print("지도 및 마커 로딩 완료");
+            } else {
+              print("위치 정보 가져오기 실패");
             }
-          } else {
-            print("❌ 현재 위치 가져오기 실패");
           }
-        },
       ))
       ..loadHtmlString(htmlMap);
 

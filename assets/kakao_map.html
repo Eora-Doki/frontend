@@ -14,35 +14,63 @@
 
 <script>
     let map;
-    let marker;
 
     function initMap(lat, lng) {
-      const container = document.getElementById('map');
-      const options = {
-        center: new kakao.maps.LatLng(lat, lng),
-        level: 3
-      };
-      map = new kakao.maps.Map(container, options);
+      kakao.maps.load(() => {
+        const container = document.getElementById('map');
+        const options = {
+          center: new kakao.maps.LatLng(lat, lng),
+          level: 3
+        };
+        map = new kakao.maps.Map(container, options);
 
-      marker = new kakao.maps.Marker({
-        position: new kakao.maps.LatLng(lat, lng),
-        map: map
+        new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(lat, lng),
+        });
+
+        console.log("지도 표시 완료:", lat, lng);
       });
-
-      console.log("✅ initMap 실행됨:", lat, lng);
     }
 
-    function updateLocation(lat, lng) {
-      console.log("📍 updateLocation 호출:", lat, lng);
-      initMap(lat, lng);
+    function addStoreMarkers(storesJson) {
+      let stores;
+
+      try {
+        stores = JSON.parse(storesJson);
+      } catch (e) {
+        console.error("JSON 파싱 실패:", e);
+        return;
+      }
+
+      if (!map || !Array.isArray(stores)) {
+        console.warn("마커 추가 실패");
+        return;
+      }
+
+      stores.forEach(store => {
+        const marker = new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(store.latitude, store.longitude)
+        });
+
+        const infoWindow = new kakao.maps.InfoWindow({
+          content: `<div style="padding:5px; font-size:14px;">${store.name}</div>`
+        });
+
+        kakao.maps.event.addListener(marker, 'click', () => {
+          infoWindow.open(map, marker);
+        });
+      });
+
+      console.log("addStoreMarkers 실행됨:", stores.length);
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      kakao.maps.load(function () {
-        initMap(36.3863372, 127.3154585);
-        console.log("✅ Kakao map SDK 로드 완료");
-      });
+    document.addEventListener("DOMContentLoaded", () => {
+      initMap(36.386341, 127.3154637);
+      console.log("DOMContentLoaded");
     });
 </script>
+
 </body>
 </html>

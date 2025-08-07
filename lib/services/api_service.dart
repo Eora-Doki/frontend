@@ -11,7 +11,7 @@ class ApiService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('http://172.30.1.9:8083/users/register'),
+        Uri.parse('http://172.30.1.96:8083/users/register'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -40,7 +40,7 @@ class ApiService {
   static Future<Map<String, dynamic>?> loginUser(String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('http://172.30.1.9:8083/users/login'),
+        Uri.parse('http://172.30.1.96:8083/users/login'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -73,7 +73,7 @@ class ApiService {
       final userId = await secureStorage.read(key: 'user_id');
 
       final response = await http.patch(
-        Uri.parse('http://172.30.1.9:8083/users/$userId/password'),
+        Uri.parse('http://172.30.1.96:8083/users/$userId/password'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token'
@@ -101,10 +101,10 @@ class ApiService {
   }
 
   static Future<List<Map<String, dynamic>>> getNearbyStores({
-    required double latitude,
-    required double longitude,
+    required double lat,
+    required double lng,
   }) async {
-    final url = Uri.parse('http://172.30.1.9:8083/stores?latitude=$latitude&longitude=$longitude');
+    final url = Uri.parse('http://172.30.1.96:8083/stores?latitude=$lat&longitude=$lng');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
